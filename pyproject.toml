@@ -1,0 +1,7 @@
+[project]
+name = "mentoria"
+version = "0.1.0"
+description = "RAG API platform"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
