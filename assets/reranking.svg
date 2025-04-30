@@ -1,0 +1,103 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Estilo -->
+  <style>
+    .title-text { font-size: 18px; font-weight: bold; font-family: Arial; }
+    .dense-text { fill: #1E88E5; font-size: 20px; font-weight: bold; font-family: Arial; }
+    .sparse-text { fill: #00C853; font-size: 20px; font-weight: bold; font-family: Arial; }
+    .mix-text { fill: #FF9800; font-size: 20px; font-weight: bold; font-family: Arial; }
+    .process-text { fill: #7986CB; font-size: 22px; font-weight: bold; font-family: Arial; }
+    .info-text { fill: #616161; font-size: 14px; font-family: Arial; }
+    .dense-doc { fill: #1E88E5; stroke: #1E88E5; stroke-width: 1; rx: 20; ry: 20; }
+    .sparse-doc { fill: #00C853; stroke: #00C853; stroke-width: 1; rx: 20; ry: 20; }
+    .mix-container { fill: none; stroke: #B0BEC5; stroke-width: 2; stroke-dasharray: 5,5; rx: 15; ry: 15; }
+    .result-container { fill: none; stroke: #B0BEC5; stroke-width: 2; stroke-dasharray: 5,5; rx: 15; ry: 15; }
+    .rerank-box { fill: #E3F2FD; stroke: #90CAF9; stroke-width: 2; rx: 10; ry: 10; }
+    .arrow { stroke: #7986CB; stroke-width: 2; stroke-dasharray: 5,5; fill: none; }
+    .doc-text { fill: white; font-size: 16px; font-weight: bold; font-family: Arial; text-anchor: middle; dominant-baseline: middle; }
+  </style>
+
+  <!-- Primeiro bloco: Mistura com Top 50 -->
+  <rect x="50" y="30" width="260" height="300" class="mix-container" />
+  <text x="180" y="60" class="mix-text" text-anchor="middle">Mistura</text>
+  <text x="180" y="85" class="info-text" text-anchor="middle">(Top 50 Únicos)</text>
+  
+  <!-- Documentos da mistura -->
+  <!-- Linha 1 -->
+  <rect x="80" y="110" width="60" height="40" class="dense-doc" />
+  <text x="110" y="130" class="doc-text">D1</text>
+  
+  <rect x="150" y="110" width="60" height="40" class="sparse-doc" />
+  <text x="180" y="130" class="doc-text">D2</text>
+  
+  <rect x="220" y="110" width="60" height="40" class="dense-doc" />
+  <text x="250" y="130" class="doc-text">D3</text>
+  
+  <!-- Linha 2 -->
+  <rect x="80" y="160" width="60" height="40" class="sparse-doc" />
+  <text x="110" y="180" class="doc-text">D4</text>
+  
+  <text x="180" y="180" class="info-text" text-anchor="middle">...</text>
+  
+  <rect x="220" y="160" width="60" height="40" class="dense-doc" />
+  <text x="250" y="180" class="doc-text">DN</text>
+  
+  <!-- Linha 3 -->
+  <rect x="80" y="210" width="60" height="40" class="dense-doc" />
+  <text x="110" y="230" class="doc-text">D12</text>
+  
+  <rect x="150" y="210" width="60" height="40" class="sparse-doc" />
+  <text x="180" y="230" class="doc-text">D7</text>
+  
+  <rect x="220" y="210" width="60" height="40" class="sparse-doc" />
+  <text x="250" y="230" class="doc-text">D23</text>
+  
+  <!-- Linha 4 -->
+  <rect x="80" y="260" width="60" height="40" class="sparse-doc" />
+  <text x="110" y="280" class="doc-text">D15</text>
+  
+  <text x="180" y="280" class="info-text" text-anchor="middle">...</text>
+  
+  <rect x="220" y="260" width="60" height="40" class="dense-doc" />
+  <text x="250" y="280" class="doc-text">D42</text>
+
+  <!-- Seta para Reranking -->
+  <path d="M 310,180 L 400,180" class="arrow" marker-end="url(#arrowhead)" />
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7986CB" />
+    </marker>
+  </defs>
+
+  <!-- Bloco de Reranking -->
+  <rect x="400" y="140" width="120" height="80" class="rerank-box" />
+  <text x="460" y="185" class="process-text" text-anchor="middle">Reranking</text>
+
+  <!-- Seta para Resultados -->
+  <path d="M 520,180 L 590,180" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Bloco de Resultados finais -->
+  <rect x="590" y="30" width="160" height="300" class="result-container" />
+  <text x="670" y="60" class="info-text" text-anchor="middle">Top 5 Mais Relevantes</text>
+
+  <!-- Documentos dos resultados -->
+  <rect x="640" y="90" width="60" height="40" class="dense-doc" />
+  <text x="670" y="110" class="doc-text">D3</text>
+  
+  <rect x="640" y="140" width="60" height="40" class="sparse-doc" />
+  <text x="670" y="160" class="doc-text">D4</text>
+  
+  <rect x="640" y="190" width="60" height="40" class="sparse-doc" />
+  <text x="670" y="210" class="doc-text">D7</text>
+  
+  <rect x="640" y="240" width="60" height="40" class="dense-doc" />
+  <text x="670" y="260" class="doc-text">D1</text>
+  
+  <rect x="640" y="290" width="60" height="40" class="dense-doc" />
+  <text x="670" y="310" class="doc-text">D12</text>
+
+  <!-- Explicação do processo -->
+  <text x="400" y="370" class="title-text" text-anchor="middle">Processo de Reranking</text>
+  <text x="400" y="395" class="info-text" text-anchor="middle">A fusão gera até 50 documentos únicos combinando resultados densos e esparsos.</text>
+  <text x="400" y="415" class="info-text" text-anchor="middle">O reranking reordena esses resultados baseado em relevância avançada.</text>
+  <text x="400" y="435" class="info-text" text-anchor="middle">Apenas os 5 documentos mais relevantes são retornados como resultado final.</text>
+</svg>

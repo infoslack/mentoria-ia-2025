@@ -132,6 +132,33 @@ app/
     └── search.py        # Endpoints de busca
 ```
 
+```mermaid
+graph TB
+  %% nó raiz
+  A[app/] 
+
+  %% arquivos na raiz
+  A --> B[main.py]
+
+  %% config
+  A --> C[config/]
+  C --> C1[settings.py]
+
+  %% models
+  A --> D[models/]
+  D --> D1[embeddings.py]
+  D --> D2[api.py]
+
+  %% services
+  A --> E[services/]
+  E --> E1[retriever.py]
+  E --> E2[embedder.py]
+
+  %% routers
+  A --> F[routers/]
+  F --> F1[search.py]
+```
+
 ## Como Funciona
 
 1. O usuário envia uma consulta para o endpoint `/search`
@@ -144,3 +171,6 @@ app/
    - Depois reordena os resultados usando o modelo de interação tardia
 4. Os documentos mais relevantes são retornados ao usuário
 
+![Diagrama de busca híbrida](./assets/hybrid-search.svg)
+
+![Reranking](./assets/reranking.svg)
