@@ -171,6 +171,6 @@ graph TB
    - Depois reordena os resultados usando o modelo de interação tardia
 4. Os documentos mais relevantes são retornados ao usuário
 
-![Diagrama de busca híbrida](./assets/hybrid-search.svg?sanitize=true)
+![Diagrama de busca híbrida](https://raw.githubusercontent.com/infoslack/mentoria-ia-2025/main/assets/hybrid-search.svg?sanitize=true)
 
-![Reranking](./assets/reranking.svg?sanitize=true)
+![Reranking](https://raw.githubusercontent.com/infoslack/mentoria-ia-2025/main/assets/reranking.svg?sanitize=true)
