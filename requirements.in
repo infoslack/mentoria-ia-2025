@@ -1,6 +1,8 @@
 openai
 fastapi
 uvicorn
+docling
+tiktoken
 pydantic
 pydantic-settings
 python-multipart

@@ -11,15 +11,25 @@ appnope==0.1.4
     # via ipykernel
 asttokens==3.0.0
     # via stack-data
+attrs==25.3.0
+    # via
+    #   jsonlines
+    #   jsonschema
+    #   referencing
+beautifulsoup4==4.13.4
+    # via docling
 certifi==2025.4.26
     # via
+    #   docling
     #   httpcore
     #   httpx
     #   requests
 charset-normalizer==3.4.1
     # via requests
 click==8.1.8
-    # via uvicorn
+    # via
+    #   typer
+    #   uvicorn
 coloredlogs==15.0.1
     # via onnxruntime
 comm==0.2.2
@@ -28,8 +38,25 @@ debugpy==1.8.14
     # via ipykernel
 decorator==5.2.1
     # via ipython
+dill==0.4.0
+    # via multiprocess
 distro==1.9.0
     # via openai
+docling==2.31.0
+    # via -r requirements.in
+docling-core==2.29.0
+    # via
+    #   docling
+    #   docling-ibm-models
+    #   docling-parse
+docling-ibm-models==3.4.2
+    # via docling
+docling-parse==4.0.1
+    # via docling
+easyocr==1.7.2
+    # via docling
+et-xmlfile==2.0.0
+    # via openpyxl
 executing==2.2.0
     # via stack-data
 faiss-cpu==1.11.0
@@ -43,6 +70,8 @@ filelock==3.18.0
     #   huggingface-hub
     #   torch
     #   transformers
+filetype==1.2.0
+    # via docling
 flatbuffers==25.2.10
     # via onnxruntime
 fsspec==2025.3.2
@@ -67,6 +96,8 @@ httpx==0.28.1
     #   qdrant-client
 huggingface-hub==0.30.2
     # via
+    #   docling
+    #   docling-ibm-models
     #   fastembed
     #   sentence-transformers
     #   tokenizers
@@ -80,6 +111,8 @@ idna==3.10
     #   anyio
     #   httpx
     #   requests
+imageio==2.37.0
+    # via scikit-image
 ipykernel==6.29.5
     # via -r requirements.in
 ipython==9.2.0
@@ -94,58 +127,122 @@ jiter==0.9.0
     # via openai
 joblib==1.4.2
     # via scikit-learn
+jsonlines==3.1.0
+    # via docling-ibm-models
+jsonref==1.1.0
+    # via docling-core
+jsonschema==4.23.0
+    # via docling-core
+jsonschema-specifications==2025.4.1
+    # via jsonschema
 jupyter-client==8.6.3
     # via ipykernel
 jupyter-core==5.7.2
     # via
     #   ipykernel
     #   jupyter-client
+latex2mathml==3.77.0
+    # via docling-core
+lazy-loader==0.4
+    # via scikit-image
 loguru==0.7.3
     # via fastembed
+lxml==5.4.0
+    # via
+    #   docling
+    #   python-docx
+    #   python-pptx
+markdown-it-py==3.0.0
+    # via rich
+marko==2.1.3
+    # via docling
 markupsafe==3.0.2
     # via jinja2
 matplotlib-inline==0.1.7
     # via
     #   ipykernel
     #   ipython
+mdurl==0.1.2
+    # via markdown-it-py
 mmh3==5.1.0
     # via fastembed
+mpire==2.10.2
+    # via semchunk
 mpmath==1.3.0
     # via sympy
+multiprocess==0.70.18
+    # via mpire
 nest-asyncio==1.6.0
     # via ipykernel
 networkx==3.4.2
-    # via torch
+    # via
+    #   scikit-image
+    #   torch
+ninja==1.11.1.4
+    # via easyocr
 numpy==2.2.5
     # via
+    #   docling-ibm-models
+    #   easyocr
     #   faiss-cpu
     #   fastembed
+    #   imageio
     #   onnxruntime
+    #   opencv-python-headless
+    #   pandas
     #   qdrant-client
+    #   safetensors
+    #   scikit-image
     #   scikit-learn
     #   scipy
+    #   shapely
+    #   tifffile
+    #   torchvision
     #   transformers
 onnxruntime==1.21.1
     # via fastembed
 openai==1.76.2
     # via -r requirements.in
+opencv-python-headless==4.11.0.86
+    # via
+    #   docling-ibm-models
+    #   easyocr
+openpyxl==3.1.5
+    # via docling
 packaging==25.0
     # via
     #   faiss-cpu
     #   huggingface-hub
     #   ipykernel
+    #   lazy-loader
     #   onnxruntime
+    #   scikit-image
     #   transformers
+pandas==2.2.3
+    # via
+    #   docling
+    #   docling-core
 parso==0.8.4
     # via jedi
 pexpect==4.9.0
     # via ipython
 pillow==11.2.1
     # via
+    #   docling
+    #   docling-core
+    #   docling-ibm-models
+    #   docling-parse
+    #   easyocr
     #   fastembed
+    #   imageio
+    #   python-pptx
+    #   scikit-image
     #   sentence-transformers
+    #   torchvision
 platformdirs==4.3.7
     # via jupyter-core
+pluggy==1.5.0
+    # via docling
 portalocker==2.10.1
     # via qdrant-client
 prompt-toolkit==3.0.51
@@ -162,9 +259,15 @@ pure-eval==0.2.3
     # via stack-data
 py-rust-stemmers==0.1.5
     # via fastembed
+pyclipper==1.3.0.post6
+    # via easyocr
 pydantic==2.11.4
     # via
     #   -r requirements.in
+    #   docling
+    #   docling-core
+    #   docling-ibm-models
+    #   docling-parse
     #   fastapi
     #   openai
     #   pydantic-settings
@@ -172,21 +275,41 @@ pydantic==2.11.4
 pydantic-core==2.33.2
     # via pydantic
 pydantic-settings==2.9.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   docling
 pygments==2.19.1
     # via
     #   ipython
     #   ipython-pygments-lexers
+    #   mpire
+    #   rich
+pylatexenc==2.10
+    # via docling
+pypdfium2==4.30.1
+    # via docling
+python-bidi==0.6.6
+    # via easyocr
 python-dateutil==2.9.0.post0
-    # via jupyter-client
+    # via
+    #   jupyter-client
+    #   pandas
+python-docx==1.1.2
+    # via docling
 python-dotenv==1.1.0
     # via
     #   -r requirements.in
     #   pydantic-settings
 python-multipart==0.0.20
     # via -r requirements.in
+python-pptx==1.0.2
+    # via docling
+pytz==2025.2
+    # via pandas
 pyyaml==6.0.2
     # via
+    #   docling-core
+    #   easyocr
     #   huggingface-hub
     #   transformers
 pyzmq==26.4.0
@@ -195,31 +318,62 @@ pyzmq==26.4.0
     #   jupyter-client
 qdrant-client==1.14.2
     # via -r requirements.in
+referencing==0.36.2
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
 regex==2024.11.6
-    # via transformers
+    # via
+    #   tiktoken
+    #   transformers
 requests==2.32.3
     # via
+    #   docling
     #   fastembed
     #   huggingface-hub
+    #   tiktoken
     #   transformers
+rich==14.0.0
+    # via typer
+rpds-py==0.24.0
+    # via
+    #   jsonschema
+    #   referencing
+rtree==1.4.0
+    # via docling
 safetensors==0.5.3
-    # via transformers
+    # via
+    #   docling-ibm-models
+    #   transformers
+scikit-image==0.25.2
+    # via easyocr
 scikit-learn==1.6.1
     # via sentence-transformers
 scipy==1.15.2
     # via
+    #   docling
+    #   easyocr
+    #   scikit-image
     #   scikit-learn
     #   sentence-transformers
+semchunk==2.2.2
+    # via docling-core
 sentence-transformers==4.1.0
     # via -r requirements.in
 setuptools==80.0.0
     # via torch
+shapely==2.1.0
+    # via easyocr
+shellingham==1.5.4
+    # via typer
 six==1.17.0
     # via python-dateutil
 sniffio==1.3.1
     # via
     #   anyio
     #   openai
+soupsieve==2.7
+    # via beautifulsoup4
 stack-data==0.6.3
     # via ipython
 starlette==0.46.2
@@ -228,23 +382,44 @@ sympy==1.14.0
     # via
     #   onnxruntime
     #   torch
+tabulate==0.9.0
+    # via
+    #   docling-core
+    #   docling-parse
 threadpoolctl==3.6.0
     # via scikit-learn
+tifffile==2025.3.30
+    # via scikit-image
+tiktoken==0.9.0
+    # via -r requirements.in
 tokenizers==0.21.1
     # via
     #   fastembed
     #   transformers
 torch==2.7.0
-    # via sentence-transformers
+    # via
+    #   docling-ibm-models
+    #   easyocr
+    #   safetensors
+    #   sentence-transformers
+    #   torchvision
+torchvision==0.22.0
+    # via
+    #   docling-ibm-models
+    #   easyocr
 tornado==6.4.2
     # via
     #   ipykernel
     #   jupyter-client
 tqdm==4.67.1
     # via
+    #   docling
+    #   docling-ibm-models
     #   fastembed
     #   huggingface-hub
+    #   mpire
     #   openai
+    #   semchunk
     #   sentence-transformers
     #   transformers
 traitlets==5.14.3
@@ -256,21 +431,35 @@ traitlets==5.14.3
     #   jupyter-core
     #   matplotlib-inline
 transformers==4.51.3
-    # via sentence-transformers
+    # via
+    #   docling-core
+    #   docling-ibm-models
+    #   sentence-transformers
+typer==0.15.3
+    # via
+    #   docling
+    #   docling-core
 typing-extensions==4.13.2
     # via
+    #   beautifulsoup4
+    #   docling-core
     #   fastapi
     #   huggingface-hub
     #   openai
     #   pydantic
     #   pydantic-core
+    #   python-docx
+    #   python-pptx
     #   sentence-transformers
     #   torch
+    #   typer
     #   typing-inspection
 typing-inspection==0.4.0
     # via
     #   pydantic
     #   pydantic-settings
+tzdata==2025.2
+    # via pandas
 urllib3==2.4.0
     # via
     #   qdrant-client
@@ -279,3 +468,5 @@ uvicorn==0.34.2
     # via -r requirements.in
 wcwidth==0.2.13
     # via prompt-toolkit
+xlsxwriter==3.2.3
+    # via python-pptx
