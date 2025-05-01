@@ -52,7 +52,7 @@ class QdrantRetriever:
             # Convert results to Document objects
             return [
                 Document(
-                    page_content=point.payload.get("page_content", ""),
+                    page_content=point.payload.get("text", ""),
                     metadata=point.payload.get("metadata", {}),
                 )
                 for point in search_result.points
