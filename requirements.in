@@ -9,5 +9,6 @@ python-multipart
 ipykernel
 faiss-cpu
 python-dotenv
+langsmith
 sentence-transformers
 qdrant-client[fastembed]

@@ -4,6 +4,7 @@ from app.services.retriever import QdrantRetriever
 from app.services.embedder import QueryEmbedder
 from app.services.openai_service import OpenAIService
 from app.config.settings import Settings
+from langsmith import traceable
 import logging
 
 logger = logging.getLogger(__name__)
@@ -31,6 +32,7 @@ def get_openai_service(settings: Settings = Depends(get_settings)):
     return OpenAIService(settings=settings)
 
 
+@traceable(name="rag_pipeline")
 @router.post("", response_model=OpenAIResponse)
 async def generate_openai_response(
     request: OpenAIRequest,

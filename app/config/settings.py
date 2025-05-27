@@ -36,4 +36,10 @@ class Settings(BaseSettings):
 
     Responda à pergunta acima usando apenas as informações do contexto fornecido."""
 
+    # LangSmith Configuration
+    langsmith_api_key: Optional[str] = None
+    langsmith_project: str = "rag-api-mentoria"
+    langsmith_endpoint: str = "https://api.smith.langchain.com"
+    langsmith_tracing: bool = False
+
     model_config = {"env_file": ".env", "extra": "allow"}

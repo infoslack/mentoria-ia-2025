@@ -2,6 +2,7 @@ from typing import List
 from openai import OpenAI
 from app.models.embeddings import Document
 from app.config.settings import Settings
+from langsmith.wrappers import wrap_openai
 import logging
 
 logger = logging.getLogger(__name__)
@@ -9,7 +10,8 @@ logger = logging.getLogger(__name__)
 
 class OpenAIService:
     def __init__(self, settings: Settings):
-        self.client = OpenAI(api_key=settings.openai_api_key)
+        base_client = OpenAI(api_key=settings.openai_api_key)
+        self.client = wrap_openai(base_client)
         self.default_model = settings.openai_model
         self.default_temperature = settings.openai_temperature
         self.default_max_output_tokens = settings.openai_max_output_tokens

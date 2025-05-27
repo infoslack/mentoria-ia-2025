@@ -92,6 +92,7 @@ httpcore==1.0.9
     # via httpx
 httpx==0.28.1
     # via
+    #   langsmith
     #   openai
     #   qdrant-client
 huggingface-hub==0.30.2
@@ -141,6 +142,8 @@ jupyter-core==5.7.2
     # via
     #   ipykernel
     #   jupyter-client
+langsmith==0.3.42
+    # via -r requirements.in
 latex2mathml==3.77.0
     # via docling-core
 lazy-loader==0.4
@@ -209,11 +212,14 @@ opencv-python-headless==4.11.0.86
     #   easyocr
 openpyxl==3.1.5
     # via docling
+orjson==3.10.18
+    # via langsmith
 packaging==25.0
     # via
     #   faiss-cpu
     #   huggingface-hub
     #   ipykernel
+    #   langsmith
     #   lazy-loader
     #   onnxruntime
     #   scikit-image
@@ -269,6 +275,7 @@ pydantic==2.11.4
     #   docling-ibm-models
     #   docling-parse
     #   fastapi
+    #   langsmith
     #   openai
     #   pydantic-settings
     #   qdrant-client
@@ -331,8 +338,12 @@ requests==2.32.3
     #   docling
     #   fastembed
     #   huggingface-hub
+    #   langsmith
+    #   requests-toolbelt
     #   tiktoken
     #   transformers
+requests-toolbelt==1.0.0
+    # via langsmith
 rich==14.0.0
     # via typer
 rpds-py==0.24.0
@@ -470,3 +481,5 @@ wcwidth==0.2.13
     # via prompt-toolkit
 xlsxwriter==3.2.3
     # via python-pptx
+zstandard==0.23.0
+    # via langsmith
