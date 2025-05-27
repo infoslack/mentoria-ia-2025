@@ -22,4 +22,18 @@ class Settings(BaseSettings):
     bm25_model_name: str = "Qdrant/bm25"
     late_interaction_model_name: str = "colbert-ir/colbertv2.0"
 
+    # OpenAI Configuration
+    openai_api_key: Optional[str] = None
+    openai_model: str = "gpt-4o-mini"
+    openai_temperature: float = 0.5
+    openai_max_output_tokens: int = 4096
+    openai_system_prompt: str = """Você é um assistente útil que responde a perguntas com base apenas no contexto fornecido.
+
+    Contexto:
+    {context}
+
+    Pergunta: {query}
+
+    Responda à pergunta acima usando apenas as informações do contexto fornecido."""
+
     model_config = {"env_file": ".env", "extra": "allow"}

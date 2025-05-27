@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.config.settings import Settings
 from app.routers.search import router as search_router
+from app.routers.openai import router as openai_router
 import logging
 
 # Configure logging
@@ -27,6 +28,7 @@ def create_application():
 
     # Add routers
     app.include_router(search_router)
+    app.include_router(openai_router)
 
     @app.get("/")
     async def root():
