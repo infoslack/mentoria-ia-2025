@@ -1,6 +1,6 @@
 'use client'
 
-import { Settings } from 'lucide-react'
+import { Settings, Zap } from 'lucide-react'
 import { SearchConfig } from '@/types'
 
 interface ConfigPanelProps {
@@ -9,7 +9,7 @@ interface ConfigPanelProps {
 }
 
 export default function ConfigPanel({ config, onConfigChange }: ConfigPanelProps) {
-  const handleChange = (key: keyof SearchConfig, value: string | number) => {
+  const handleChange = (key: keyof SearchConfig, value: string | number | boolean) => {
     onConfigChange({
       ...config,
       [key]: value
@@ -28,6 +28,30 @@ export default function ConfigPanel({ config, onConfigChange }: ConfigPanelProps
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Modo Streaming */}
+        <div className="md:col-span-2">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={config.useStreaming || false}
+              onChange={(e) => handleChange('useStreaming', e.target.checked)}
+              className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+            />
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Modo Streaming
+              </span>
+              <span className="text-xs text-gray-500">
+                (Respostas em tempo real)
+              </span>
+            </div>
+          </label>
+          <p className="text-xs text-gray-500 mt-2 ml-8">
+            Quando ativado, você verá a resposta sendo gerada em tempo real, com um efeito de digitação.
+          </p>
+        </div>
+
         {/* API URL */}
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -110,6 +134,7 @@ export default function ConfigPanel({ config, onConfigChange }: ConfigPanelProps
             limit: parseInt(process.env.NEXT_PUBLIC_DEFAULT_LIMIT || '5'),
             temperature: parseFloat(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE || '0.5'),
             maxTokens: parseInt(process.env.NEXT_PUBLIC_DEFAULT_MAX_TOKENS || '4096'),
+            useStreaming: true
           })}
           className="text-sm text-gray-600 hover:text-gray-800 underline"
         >

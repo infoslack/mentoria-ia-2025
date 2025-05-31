@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, Settings, FileText, Scale, BookOpen } from 'lucide-react'
+import { Search, Settings, FileText, Scale, BookOpen, Zap } from 'lucide-react'
 import SearchForm from '../components/SearchForm'
 import ResponseDisplay from '../components/ResponseDisplay'
 import ConfigPanel from '../components/ConfigPanel'
-import { SearchConfig, SearchResponse } from '../types'
+import { SearchConfig, SearchResponse, Document, StreamEvent } from '../types'
 
 const defaultConfig: SearchConfig = {
   apiUrl: process.env.NEXT_PUBLIC_RAG_API_URL || 'http://localhost:8000',
   limit: parseInt(process.env.NEXT_PUBLIC_DEFAULT_LIMIT || '5'),
   temperature: parseFloat(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE || '0.5'),
   maxTokens: parseInt(process.env.NEXT_PUBLIC_DEFAULT_MAX_TOKENS || '4096'),
+  useStreaming: true, // Ativado por padrão
 }
 
 export default function HomePage() {
@@ -20,40 +21,139 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showConfig, setShowConfig] = useState(false)
+  
+  // Estados para streaming
+  const [streaming, setStreaming] = useState(false)
+  const [streamingText, setStreamingText] = useState('')
+  const [sourceDocuments, setSourceDocuments] = useState<Document[]>([])
 
   const handleSearch = async (query: string) => {
     if (!query.trim()) return
 
+    // Limpa estados anteriores
     setLoading(true)
     setError(null)
+    setResponse(null)
+    setStreaming(false)
+    setStreamingText('')
+    setSourceDocuments([])
 
     try {
-      const res = await fetch(`${config.apiUrl}/openai`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: query.trim(),
-          limit: config.limit,
-          temperature: config.temperature,
-          max_output_tokens: config.maxTokens,
-        }),
-      })
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}))
-        throw new Error(errorData.detail || `Erro ${res.status}: ${res.statusText}`)
+      if (config.useStreaming) {
+        // Modo streaming
+        setStreaming(true)
+        await handleStreamingSearch(query)
+      } else {
+        // Modo tradicional
+        await handleTraditionalSearch(query)
       }
-
-      const data: SearchResponse = await res.json()
-      setResponse(data)
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido'
       setError(errorMessage)
       setResponse(null)
     } finally {
       setLoading(false)
+      setStreaming(false)
+    }
+  }
+
+  const handleTraditionalSearch = async (query: string) => {
+    const res = await fetch(`${config.apiUrl}/openai`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: query.trim(),
+        limit: config.limit,
+        temperature: config.temperature,
+        max_output_tokens: config.maxTokens,
+      }),
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}))
+      throw new Error(errorData.detail || `Erro ${res.status}: ${res.statusText}`)
+    }
+
+    const data: SearchResponse = await res.json()
+    setResponse(data)
+  }
+
+  const handleStreamingSearch = async (query: string) => {
+    const response = await fetch(`${config.apiUrl}/openai/stream`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: query.trim(),
+        limit: config.limit,
+        temperature: config.temperature,
+        max_output_tokens: config.maxTokens,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.detail || `Erro ${response.status}: ${response.statusText}`)
+    }
+
+    if (!response.body) {
+      throw new Error('Resposta sem corpo')
+    }
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let accumulatedText = ''
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value, { stream: true })
+        const lines = chunk.split('\n')
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data: StreamEvent = JSON.parse(line.slice(6))
+              
+              switch (data.type) {
+                case 'source_documents':
+                  setSourceDocuments(data.documents || [])
+                  break
+                  
+                case 'text_delta':
+                  accumulatedText += data.delta || ''
+                  setStreamingText(accumulatedText)
+                  break
+                  
+                case 'response.created':
+                  console.log('Resposta iniciada:', data)
+                  break
+                  
+                case 'stream_completed':
+                  // Cria o objeto de resposta final
+                  setResponse({
+                    answer: accumulatedText,
+                    source_documents: sourceDocuments
+                  })
+                  break
+                  
+                case 'error':
+                case 'response.failed':
+                  throw new Error(data.message || data.error || 'Erro no streaming')
+              }
+            } catch (parseError) {
+              console.error('Erro ao processar evento:', parseError)
+            }
+          }
+        }
+      }
+    } finally {
+      reader.releaseLock()
     }
   }
 
@@ -73,6 +173,14 @@ export default function HomePage() {
           <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
             Sistema de busca inteligente em documentos normativos e jurídicos.
           </p>
+
+          {/* Indicador de modo streaming */}
+          {config.useStreaming && (
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 text-sm rounded-full mb-4">
+              <Zap className="w-4 h-4" />
+              <span>Modo streaming ativado</span>
+            </div>
+          )}
         </div>
 
         {/* Botão configurações */}
@@ -101,6 +209,9 @@ export default function HomePage() {
           response={response} 
           error={error} 
           loading={loading}
+          streaming={streaming}
+          streamingText={streamingText}
+          sourceDocuments={sourceDocuments}
         />
 
         {/* Footer */}

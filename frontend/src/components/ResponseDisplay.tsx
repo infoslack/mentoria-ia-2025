@@ -1,13 +1,16 @@
 'use client'
 
-import React, { JSX } from 'react'
-import { Bot, FileText, AlertCircle, Search } from 'lucide-react'
-import { SearchResponse } from '../types'
+import React, { JSX, useState, useEffect } from 'react'
+import { Bot, FileText, AlertCircle, Search, Sparkles } from 'lucide-react'
+import { SearchResponse, Document } from '../types'
 
 interface ResponseDisplayProps {
   response: SearchResponse | null
   error: string | null
   loading: boolean
+  streaming?: boolean
+  streamingText?: string
+  sourceDocuments?: Document[]
 }
 
 // Função para converter markdown simples em HTML
@@ -105,8 +108,54 @@ function formatInlineMarkdown(text: string): string {
     .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">$1</code>')
 }
 
-export default function ResponseDisplay({ response, error, loading }: ResponseDisplayProps) {
-  if (loading) {
+// Componente para cursor piscante
+function BlinkingCursor() {
+  return (
+    <span className="inline-block w-0.5 h-5 bg-blue-600 animate-pulse ml-1" />
+  )
+}
+
+export default function ResponseDisplay({ 
+  response, 
+  error, 
+  loading, 
+  streaming = false,
+  streamingText = '',
+  sourceDocuments = []
+}: ResponseDisplayProps) {
+  const [displayedText, setDisplayedText] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
+
+  // Efeito de digitação suave para texto não-streaming
+  useEffect(() => {
+    if (response && !streaming && response.answer && !streamingText) {
+      setDisplayedText('')
+      setIsTyping(true)
+      let currentIndex = 0
+      const text = response.answer
+      
+      const typeWriter = () => {
+        if (currentIndex < text.length) {
+          setDisplayedText(text.substring(0, currentIndex + 1))
+          currentIndex++
+          setTimeout(typeWriter, 5) // Velocidade de digitação
+        } else {
+          setIsTyping(false)
+        }
+      }
+      
+      typeWriter()
+    }
+  }, [response, streaming, streamingText])
+
+  // Para streaming, exibe o texto diretamente
+  useEffect(() => {
+    if (streaming && streamingText) {
+      setDisplayedText(streamingText)
+    }
+  }, [streaming, streamingText])
+
+  if (loading && !streaming) {
     return (
       <div className="card">
         <div className="flex items-center gap-3 mb-4">
@@ -139,7 +188,7 @@ export default function ResponseDisplay({ response, error, loading }: ResponseDi
     )
   }
 
-  if (!response) {
+  if (!response && !streaming && !displayedText) {
     return (
       <div className="card text-center py-12">
         <Search className="w-16 h-16 mx-auto mb-4 text-gray-400" />
@@ -153,25 +202,42 @@ export default function ResponseDisplay({ response, error, loading }: ResponseDi
     )
   }
 
+  const documentsToShow = sourceDocuments.length > 0 ? sourceDocuments : (response?.source_documents || [])
+  const textToShow = displayedText
+
   return (
     <div className="space-y-6">
       {/* Resposta Principal */}
-      <div className="card">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-            <Bot className="w-4 h-4 text-white" />
+      {(textToShow || streaming) && (
+        <div className="card animate-fadeIn">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              {streaming ? (
+                <Sparkles className="w-4 h-4 text-white animate-pulse" />
+              ) : (
+                <Bot className="w-4 h-4 text-white" />
+              )}
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800">
+              Resposta
+            </h3>
+            {streaming && loading && (
+              <span className="text-xs text-blue-600 animate-pulse">
+                Gerando resposta em tempo real...
+              </span>
+            )}
           </div>
-          <h3 className="text-lg font-semibold text-gray-800">Resposta</h3>
+          
+          <div className="prose prose-gray max-w-none">
+            {textToShow ? formatMarkdown(textToShow) : null}
+            {(streaming && loading) || isTyping ? <BlinkingCursor /> : null}
+          </div>
         </div>
-        
-        <div className="prose prose-gray max-w-none">
-          {formatMarkdown(response.answer)}
-        </div>
-      </div>
+      )}
 
-      {/* Documentos Fonte */}
-      {response.source_documents && response.source_documents.length > 0 && (
-        <div className="card">
+      {/* Documentos Fonte (aparecem depois da resposta) */}
+      {documentsToShow.length > 0 && (
+        <div className="card animate-fadeIn">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
               <FileText className="w-4 h-4 text-green-600" />
@@ -180,15 +246,16 @@ export default function ResponseDisplay({ response, error, loading }: ResponseDi
               Artigos e Dispositivos Consultados
             </h3>
             <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-medium">
-              {response.source_documents.length} fonte{response.source_documents.length !== 1 ? 's' : ''}
+              {documentsToShow.length} fonte{documentsToShow.length !== 1 ? 's' : ''}
             </span>
           </div>
           
           <div className="space-y-4">
-            {response.source_documents.map((doc, index) => (
+            {documentsToShow.map((doc, index) => (
               <div 
                 key={index}
-                className="p-4 bg-gray-50 rounded-xl border-l-4 border-blue-500 hover:bg-gray-100 transition-colors"
+                className="p-4 bg-gray-50 rounded-xl border-l-4 border-blue-500 hover:bg-gray-100 transition-colors animate-slideIn"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
