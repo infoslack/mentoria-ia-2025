@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.config.settings import Settings
 from app.routers.search import router as search_router
 from app.routers.openai import router as openai_router
+from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 # Configure logging
@@ -24,6 +25,17 @@ def create_application():
         title=settings.api_title,
         description=settings.api_description,
         version=settings.api_version,
+    )
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+        ],  # Frontend local
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     # Add routers

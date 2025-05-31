@@ -1,0 +1,12 @@
+define user ask off topic
+  "futebol"
+  "comida"
+  "política"
+  "relacionamento"
+
+define bot refuse off topic
+  "Desculpe, só posso ajudar com tópicos de Machine Learning."
+
+define flow
+  user ask off topic
+  bot refuse off topic
