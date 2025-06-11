@@ -1,0 +1,29 @@
+{
+    "records": [
+        {
+            "id": 1,
+            "question": "Qual é a política de devoluções?",
+            "answer": "Produtos podem ser devolvidos em até 30 dias após a compra com a nota fiscal original. O reembolso será processado no método de pagamento original em 5-7 dias úteis."
+        },
+        {
+            "id": 2,
+            "question": "Vocês entregam em todo o Brasil?",
+            "answer": "Sim, realizamos entregas para todos os estados brasileiros. O prazo de entrega varia entre 3-10 dias úteis, dependendo da região. Para áreas remotas, pode haver um acréscimo no prazo."
+        },
+        {
+            "id": 3,
+            "question": "Quais formas de pagamento são aceitas?",
+            "answer": "Aceitamos cartões de crédito (Visa, Mastercard, Elo, American Express), Pix, boleto bancário e pagamento parcelado em até 12x sem juros para compras acima de R$300,00."
+        },
+        {
+            "id": 4,
+            "question": "Como faço para rastrear meu pedido?",
+            "answer": "Você pode rastrear seu pedido acessando a seção 'Meus Pedidos' na sua conta em nosso site ou usando o código de rastreio enviado por e-mail após o despacho do produto."
+        },
+        {
+            "id": 5,
+            "question": "Vocês oferecem garantia estendida?",
+            "answer": "Sim, oferecemos garantia estendida opcional para produtos eletrônicos. A garantia padrão é de 12 meses, mas pode ser estendida para 24 ou 36 meses com um custo adicional de 10% ou 15% do valor do produto, respectivamente."
+        }
+    ]
+}

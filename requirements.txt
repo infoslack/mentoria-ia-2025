@@ -2,16 +2,12 @@
 #    uv pip compile requirements.in -o requirements.txt
 aiohappyeyeballs==2.6.1
     # via aiohttp
-aiohttp==3.12.4
-    # via
-    #   langchain-community
-    #   nemoguardrails
+aiohttp==3.12.7
+    # via litellm
 aiosignal==1.3.2
     # via aiohttp
 annotated-types==0.7.0
     # via pydantic
-annoy==1.17.3
-    # via nemoguardrails
 anyio==4.9.0
     # via
     #   httpx
@@ -19,6 +15,8 @@ anyio==4.9.0
     #   starlette
 appnope==0.1.4
     # via ipykernel
+arrow==1.3.0
+    # via isoduration
 asttokens==3.0.0
     # via stack-data
 attrs==25.3.0
@@ -28,30 +26,49 @@ attrs==25.3.0
     #   jsonschema
     #   referencing
 beautifulsoup4==4.13.4
-    # via docling
+    # via
+    #   docling
+    #   yfinance
 certifi==2025.4.26
     # via
+    #   curl-cffi
     #   docling
     #   httpcore
     #   httpx
     #   requests
+cffi==1.17.1
+    # via curl-cffi
 charset-normalizer==3.4.2
     # via requests
 click==8.1.8
     # via
     #   docling
+    #   litellm
+    #   nltk
     #   typer
     #   uvicorn
+colorama==0.4.6
+    # via griffe
 coloredlogs==15.0.1
-    # via onnxruntime
+    # via
+    #   guardrails-ai
+    #   onnxruntime
 comm==0.2.2
     # via ipykernel
-dataclasses-json==0.6.7
-    # via langchain-community
+curl-cffi==0.11.3
+    # via yfinance
 debugpy==1.8.14
     # via ipykernel
 decorator==5.2.1
     # via ipython
+deprecated==1.2.18
+    # via
+    #   opentelemetry-api
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-semantic-conventions
+diff-match-patch==20230430
+    # via guardrails-ai
 dill==0.4.0
     # via multiprocess
 distro==1.9.0
@@ -75,14 +92,12 @@ executing==2.2.0
     # via stack-data
 faiss-cpu==1.11.0
     # via -r requirements.in
+faker==25.9.2
+    # via guardrails-ai
 fastapi==0.115.12
-    # via
-    #   -r requirements.in
-    #   nemoguardrails
+    # via -r requirements.in
 fastembed==0.6.1
-    # via
-    #   nemoguardrails
-    #   qdrant-client
+    # via qdrant-client
 filelock==3.18.0
     # via
     #   huggingface-hub
@@ -92,7 +107,11 @@ filetype==1.2.0
     # via docling
 flatbuffers==25.2.10
     # via onnxruntime
-frozenlist==1.6.0
+fqdn==1.5.1
+    # via jsonschema
+frozendict==2.4.6
+    # via yfinance
+frozenlist==1.6.2
     # via
     #   aiohttp
     #   aiosignal
@@ -100,8 +119,22 @@ fsspec==2025.5.1
     # via
     #   huggingface-hub
     #   torch
+googleapis-common-protos==1.70.0
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+griffe==0.36.9
+    # via guardrails-ai
 grpcio==1.71.0
-    # via qdrant-client
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   qdrant-client
+guardrails-ai==0.5.15
+    # via -r requirements.in
+guardrails-api-client==0.3.13
+    # via guardrails-ai
+guardrails-hub-types==0.0.4
+    # via guardrails-ai
 h11==0.16.0
     # via
     #   httpcore
@@ -117,11 +150,9 @@ httpcore==1.0.9
 httpx==0.28.1
     # via
     #   langsmith
-    #   nemoguardrails
+    #   litellm
     #   openai
     #   qdrant-client
-httpx-sse==0.4.0
-    # via langchain-community
 huggingface-hub==0.32.2
     # via
     #   docling
@@ -138,36 +169,52 @@ idna==3.10
     # via
     #   anyio
     #   httpx
+    #   jsonschema
     #   requests
     #   yarl
 imageio==2.37.0
     # via scikit-image
+importlib-metadata==8.6.1
+    # via
+    #   litellm
+    #   opentelemetry-api
 ipykernel==6.29.5
     # via -r requirements.in
 ipython==9.2.0
     # via ipykernel
 ipython-pygments-lexers==1.1.1
     # via ipython
+isoduration==20.11.0
+    # via jsonschema
 jedi==0.19.2
     # via ipython
 jinja2==3.1.6
     # via
-    #   nemoguardrails
+    #   litellm
     #   torch
 jiter==0.10.0
     # via openai
 joblib==1.5.1
-    # via scikit-learn
+    # via
+    #   nltk
+    #   scikit-learn
 jsonlines==3.1.0
     # via docling-ibm-models
 jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
-    # via jsonpatch
+    # via
+    #   jsonpatch
+    #   jsonschema
 jsonref==1.1.0
-    # via docling-core
+    # via
+    #   docling-core
+    #   guardrails-ai
 jsonschema==4.24.0
-    # via docling-core
+    # via
+    #   docling-core
+    #   guardrails-ai
+    #   litellm
 jsonschema-specifications==2025.4.1
     # via jsonschema
 jupyter-client==8.6.3
@@ -176,41 +223,24 @@ jupyter-core==5.8.1
     # via
     #   ipykernel
     #   jupyter-client
-langchain==0.3.25
-    # via
-    #   -r requirements.in
-    #   langchain-community
-    #   nemoguardrails
-langchain-community==0.3.24
-    # via nemoguardrails
-langchain-core==0.3.62
-    # via
-    #   langchain
-    #   langchain-community
-    #   langchain-openai
-    #   langchain-text-splitters
-    #   nemoguardrails
-langchain-openai==0.3.18
-    # via -r requirements.in
-langchain-text-splitters==0.3.8
-    # via langchain
+langchain-core==0.3.63
+    # via guardrails-ai
 langsmith==0.3.43
     # via
     #   -r requirements.in
-    #   langchain
-    #   langchain-community
     #   langchain-core
-lark==1.1.9
-    # via nemoguardrails
 latex2mathml==3.78.0
     # via docling-core
 lazy-loader==0.4
     # via scikit-image
+litellm==1.72.0
+    # via guardrails-ai
 loguru==0.7.3
     # via fastembed
-lxml==5.4.0
+lxml==4.9.4
     # via
     #   docling
+    #   guardrails-ai
     #   python-docx
     #   python-pptx
 markdown-it-py==3.0.0
@@ -219,8 +249,6 @@ marko==2.1.3
     # via docling
 markupsafe==3.0.2
     # via jinja2
-marshmallow==3.26.1
-    # via dataclasses-json
 matplotlib-inline==0.1.7
     # via
     #   ipykernel
@@ -239,20 +267,18 @@ multidict==6.4.4
     #   yarl
 multiprocess==0.70.18
     # via mpire
-mypy-extensions==1.1.0
-    # via typing-inspect
-nemoguardrails==0.11.0
-    # via -r requirements.in
+multitasking==0.0.11
+    # via yfinance
 nest-asyncio==1.6.0
-    # via
-    #   ipykernel
-    #   nemoguardrails
+    # via ipykernel
 networkx==3.5
     # via
     #   scikit-image
     #   torch
 ninja==1.11.1.4
     # via easyocr
+nltk==3.8.1
+    # via guardrails-ai
 numpy==2.2.6
     # via
     #   docling-ibm-models
@@ -260,7 +286,6 @@ numpy==2.2.6
     #   faiss-cpu
     #   fastembed
     #   imageio
-    #   langchain-community
     #   onnxruntime
     #   opencv-python-headless
     #   pandas
@@ -273,18 +298,46 @@ numpy==2.2.6
     #   tifffile
     #   torchvision
     #   transformers
+    #   yfinance
 onnxruntime==1.22.0
     # via fastembed
 openai==1.82.0
     # via
     #   -r requirements.in
-    #   langchain-openai
+    #   guardrails-ai
+    #   litellm
 opencv-python-headless==4.11.0.86
     # via
     #   docling-ibm-models
     #   easyocr
 openpyxl==3.1.5
     # via docling
+opentelemetry-api==1.33.1
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-sdk
+    #   opentelemetry-semantic-conventions
+opentelemetry-exporter-otlp-proto-common==1.33.1
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-exporter-otlp-proto-grpc==1.33.1
+    # via guardrails-ai
+opentelemetry-exporter-otlp-proto-http==1.33.1
+    # via guardrails-ai
+opentelemetry-proto==1.33.1
+    # via
+    #   opentelemetry-exporter-otlp-proto-common
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-sdk==1.33.1
+    # via
+    #   guardrails-ai
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-semantic-conventions==0.54b1
+    # via opentelemetry-sdk
 orjson==3.10.18
     # via langsmith
 packaging==24.2
@@ -295,7 +348,6 @@ packaging==24.2
     #   langchain-core
     #   langsmith
     #   lazy-loader
-    #   marshmallow
     #   onnxruntime
     #   scikit-image
     #   transformers
@@ -303,8 +355,11 @@ pandas==2.2.3
     # via
     #   docling
     #   docling-core
+    #   yfinance
 parso==0.8.4
     # via jedi
+peewee==3.18.1
+    # via yfinance
 pexpect==4.9.0
     # via ipython
 pillow==11.2.1
@@ -320,24 +375,29 @@ pillow==11.2.1
     #   scikit-image
     #   sentence-transformers
     #   torchvision
+pip==25.1.1
+    # via guardrails-ai
 platformdirs==4.3.8
-    # via jupyter-core
+    # via
+    #   jupyter-core
+    #   yfinance
 pluggy==1.6.0
     # via docling
 portalocker==2.10.1
     # via qdrant-client
 prompt-toolkit==3.0.51
-    # via
-    #   ipython
-    #   nemoguardrails
+    # via ipython
 propcache==0.3.1
     # via
     #   aiohttp
     #   yarl
-protobuf==6.31.1
+protobuf==5.29.5
     # via
+    #   googleapis-common-protos
     #   onnxruntime
+    #   opentelemetry-proto
     #   qdrant-client
+    #   yfinance
 psutil==7.0.0
     # via ipykernel
 ptyprocess==0.7.0
@@ -348,6 +408,8 @@ py-rust-stemmers==0.1.5
     # via fastembed
 pyclipper==1.3.0.post6
     # via easyocr
+pycparser==2.22
+    # via cffi
 pydantic==2.11.5
     # via
     #   -r requirements.in
@@ -356,10 +418,11 @@ pydantic==2.11.5
     #   docling-ibm-models
     #   docling-parse
     #   fastapi
-    #   langchain
+    #   guardrails-ai
+    #   guardrails-api-client
     #   langchain-core
     #   langsmith
-    #   nemoguardrails
+    #   litellm
     #   openai
     #   pydantic-settings
     #   qdrant-client
@@ -369,13 +432,16 @@ pydantic-settings==2.9.1
     # via
     #   -r requirements.in
     #   docling
-    #   langchain-community
+pydash==7.0.7
+    # via guardrails-ai
 pygments==2.19.1
     # via
     #   ipython
     #   ipython-pygments-lexers
     #   mpire
     #   rich
+pyjwt==2.10.1
+    # via guardrails-ai
 pylatexenc==2.10
     # via docling
 pypdfium2==4.30.1
@@ -384,6 +450,10 @@ python-bidi==0.6.6
     # via easyocr
 python-dateutil==2.9.0.post0
     # via
+    #   arrow
+    #   faker
+    #   guardrails-ai
+    #   guardrails-api-client
     #   jupyter-client
     #   pandas
 python-docx==1.1.2
@@ -391,22 +461,22 @@ python-docx==1.1.2
 python-dotenv==1.1.0
     # via
     #   -r requirements.in
+    #   litellm
     #   pydantic-settings
 python-multipart==0.0.20
     # via -r requirements.in
 python-pptx==1.0.2
     # via docling
 pytz==2025.2
-    # via pandas
+    # via
+    #   pandas
+    #   yfinance
 pyyaml==6.0.2
     # via
     #   docling-core
     #   easyocr
     #   huggingface-hub
-    #   langchain
-    #   langchain-community
     #   langchain-core
-    #   nemoguardrails
     #   transformers
 pyzmq==26.4.0
     # via
@@ -418,31 +488,40 @@ referencing==0.36.2
     # via
     #   jsonschema
     #   jsonschema-specifications
-regex==2024.11.6
+regex==2023.12.25
     # via
+    #   guardrails-ai
+    #   nltk
     #   tiktoken
     #   transformers
 requests==2.32.3
     # via
     #   docling
     #   fastembed
+    #   guardrails-ai
     #   huggingface-hub
-    #   langchain
-    #   langchain-community
     #   langsmith
+    #   opentelemetry-exporter-otlp-proto-http
     #   requests-toolbelt
     #   tiktoken
     #   transformers
+    #   yfinance
 requests-toolbelt==1.0.0
     # via langsmith
-rich==14.0.0
+rfc3339-validator==0.1.4
+    # via jsonschema
+rfc3987==1.3.8
+    # via jsonschema
+rich==13.9.4
     # via
-    #   nemoguardrails
+    #   guardrails-ai
     #   typer
 rpds-py==0.25.1
     # via
     #   jsonschema
     #   referencing
+rstr==3.2.2
+    # via guardrails-ai
 rtree==1.4.0
     # via docling
 safetensors==0.5.3
@@ -462,34 +541,32 @@ scipy==1.15.3
     #   sentence-transformers
 semchunk==2.2.2
     # via docling-core
+semver==3.0.4
+    # via guardrails-ai
 sentence-transformers==4.1.0
     # via -r requirements.in
 setuptools==80.9.0
-    # via torch
+    # via
+    #   guardrails-api-client
+    #   torch
 shapely==2.1.1
     # via easyocr
 shellingham==1.5.4
     # via typer
-simpleeval==1.0.3
-    # via nemoguardrails
 six==1.17.0
-    # via python-dateutil
+    # via
+    #   python-dateutil
+    #   rfc3339-validator
 sniffio==1.3.1
     # via
     #   anyio
     #   openai
 soupsieve==2.7
     # via beautifulsoup4
-sqlalchemy==2.0.41
-    # via
-    #   langchain
-    #   langchain-community
 stack-data==0.6.3
     # via ipython
 starlette==0.46.2
-    # via
-    #   fastapi
-    #   nemoguardrails
+    # via fastapi
 sympy==1.14.0
     # via
     #   onnxruntime
@@ -500,7 +577,7 @@ tabulate==0.9.0
     #   docling-parse
 tenacity==9.1.2
     # via
-    #   langchain-community
+    #   guardrails-ai
     #   langchain-core
 threadpoolctl==3.6.0
     # via scikit-learn
@@ -509,10 +586,12 @@ tifffile==2025.5.26
 tiktoken==0.9.0
     # via
     #   -r requirements.in
-    #   langchain-openai
+    #   guardrails-ai
+    #   litellm
 tokenizers==0.21.1
     # via
     #   fastembed
+    #   litellm
     #   transformers
 torch==2.7.0
     # via
@@ -536,6 +615,7 @@ tqdm==4.67.1
     #   fastembed
     #   huggingface-hub
     #   mpire
+    #   nltk
     #   openai
     #   semchunk
     #   sentence-transformers
@@ -553,52 +633,65 @@ transformers==4.52.3
     #   docling-core
     #   docling-ibm-models
     #   sentence-transformers
-typer==0.15.4
+typer==0.12.5
     # via
     #   docling
     #   docling-core
-    #   nemoguardrails
+    #   guardrails-ai
+types-python-dateutil==2.9.0.20250516
+    # via arrow
 typing-extensions==4.13.2
     # via
+    #   anyio
     #   beautifulsoup4
     #   docling-core
     #   fastapi
+    #   guardrails-ai
+    #   guardrails-api-client
     #   huggingface-hub
     #   langchain-core
     #   openai
+    #   opentelemetry-sdk
     #   pydantic
     #   pydantic-core
+    #   pydash
     #   python-docx
     #   python-pptx
+    #   referencing
     #   sentence-transformers
-    #   sqlalchemy
     #   torch
     #   typer
-    #   typing-inspect
     #   typing-inspection
-typing-inspect==0.9.0
-    # via dataclasses-json
 typing-inspection==0.4.1
     # via
     #   pydantic
     #   pydantic-settings
 tzdata==2025.2
     # via pandas
-urllib3==2.4.0
+uri-template==1.3.0
+    # via jsonschema
+urllib3==2.0.7
     # via
+    #   guardrails-api-client
     #   qdrant-client
     #   requests
 uvicorn==0.34.2
-    # via
-    #   -r requirements.in
-    #   nemoguardrails
-watchdog==6.0.0
-    # via nemoguardrails
+    # via -r requirements.in
 wcwidth==0.2.13
     # via prompt-toolkit
+webcolors==24.11.1
+    # via jsonschema
+websockets==15.0.1
+    # via yfinance
+wrapt==1.17.2
+    # via deprecated
 xlsxwriter==3.2.3
     # via python-pptx
 yarl==1.20.0
     # via aiohttp
+yfinance==0.2.62
+    # via -r requirements.in
+zipp==3.22.0
+    # via importlib-metadata
 zstandard==0.23.0
     # via langsmith

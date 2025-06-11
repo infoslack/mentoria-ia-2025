@@ -10,8 +10,8 @@ ipykernel
 faiss-cpu
 python-dotenv
 langsmith
-langchain
-langchain-openai
-nemoguardrails
 sentence-transformers
 qdrant-client[fastembed]
+
+guardrails-ai
+yfinance
