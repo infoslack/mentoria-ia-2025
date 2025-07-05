@@ -1,10 +1,3 @@
-"""
-Agent Financeiro com Tools Parametrizadas
-
-Requer arquivo .env na raiz do projeto com:
-OPENAI_API_KEY=sua-chave-openai-aqui
-"""
-
 import openai
 import os
 from dotenv import load_dotenv
@@ -45,9 +38,9 @@ def analyze_financial_query(user_input: str) -> Optional[str]:
                 "role": "system",
                 "content": """Analise a consulta financeira e determine:
                 - get_financial_data: para dados brutos
-                - plot_revenue_evolution: para evolução de receita de UMA empresa  
+                - plot_revenue_evolution: para evolução de receita de UMA empresa
                 - plot_net_income_comparison: para comparar MÚLTIPLAS empresas
-                
+
                 Símbolos: AAPL, MSFT, GOOGL, NVDA, TSLA, META, AMZN""",
             },
             {"role": "user", "content": user_input},
